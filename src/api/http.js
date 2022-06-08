@@ -1,7 +1,7 @@
 import Axios from "axios";
 import Cookies from "js-cookie";
 import Store from "@/store";
-
+import { redirectToLogin } from "@/configs";
 const RESP_STATUS = {
   OK: 200,
   UNAUTHORIZED: 401,
@@ -38,15 +38,17 @@ http.interceptors.request.use(async (config) => {
  */
 http.interceptors.response.use(
   (response) => {
+    // 未通过鉴权校验时，跳转至登录页
+    if(response.data.code == 401) {
+      redirectToLogin()
+    }
     return response;
   },
   (err) => {
     const { status } = err.response || {};
-    // 未通过鉴权校验时，跳转至登录页
     if (status === RESP_STATUS.UNAUTHORIZED) {
-      window.location.href("www.baidu.com");
+      redirectToLogin()
     }
-
     return Promise.reject(err);
   }
 );

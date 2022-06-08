@@ -14,5 +14,8 @@ export default defineComponent({
 
 
 <style lang="scss">
+html {
+  overflow: hidden;
+}
 
 </style>

@@ -1,17 +1,26 @@
 <template>
-  <div>
+  <div class="canvas-container">
     <div class="canvaszz"> </div>
     <canvas id="canvas"></canvas>
   </div>
 </template>
 
 <script>
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent, onMounted, onBeforeUnmount } from 'vue'
 export default defineComponent({
   setup() {
-      
-    onMounted(() => {
-      var canvas = document.getElementById('canvas'),
+    //监听窗口变化
+    const resizeCanvas = () => {
+      window.addEventListener('resize', draw())
+    }
+
+    //移除监听
+    const removeResize = () => {
+      window.removeEventListener('resize', draw())
+    }
+
+    const draw = () => {
+      let canvas = document.getElementById('canvas'),
         ctx = canvas.getContext('2d'),
         w = (canvas.width = window.innerWidth),
         h = (canvas.height = window.innerHeight),
@@ -20,11 +29,11 @@ export default defineComponent({
         count = 0,
         maxStars = 2500 //星星数量
 
-      var canvas2 = document.createElement('canvas'),
+      let canvas2 = document.createElement('canvas'),
         ctx2 = canvas2.getContext('2d')
       canvas2.width = 100
       canvas2.height = 100
-      var half = canvas2.width / 2,
+      let half = canvas2.width / 2,
         gradient2 = ctx2.createRadialGradient(half, half, 0, half, half, half)
       gradient2.addColorStop(0.025, '#CCC')
       gradient2.addColorStop(0.1, 'hsl(' + hue + ', 61%, 33%)')
@@ -45,7 +54,7 @@ export default defineComponent({
         }
 
         if (min > max) {
-          var hold = max
+          let hold = max
           max = min
           min = hold
         }
@@ -54,13 +63,13 @@ export default defineComponent({
       }
 
       function maxOrbit(x, y) {
-        var max = Math.max(x, y),
+        let max = Math.max(x, y),
           diameter = Math.round(Math.sqrt(max * max + max * max))
         return diameter / 2
         //星星移动范围，值越大范围越小，
       }
 
-      var Star = function () {
+      let Star = function () {
         this.orbitRadius = random(maxOrbit(w, h))
         this.radius = random(60, this.orbitRadius) / 18
         //星星大小
@@ -76,7 +85,7 @@ export default defineComponent({
       }
 
       Star.prototype.draw = function () {
-        var x = Math.sin(this.timePassed) * this.orbitRadius + this.orbitX,
+        let x = Math.sin(this.timePassed) * this.orbitRadius + this.orbitX,
           y = Math.cos(this.timePassed) * this.orbitRadius + this.orbitY,
           twinkle = random(10)
 
@@ -97,7 +106,7 @@ export default defineComponent({
         this.timePassed += this.speed
       }
 
-      for (var i = 0; i < maxStars; i++) {
+      for (let i = 0; i < maxStars; i++) {
         new Star()
       }
 
@@ -108,7 +117,7 @@ export default defineComponent({
         ctx.fillRect(0, 0, w, h)
 
         ctx.globalCompositeOperation = 'lighter'
-        for (var i = 1, l = stars.length; i < l; i++) {
+        for (let i = 1, l = stars.length; i < l; i++) {
           stars[i].draw()
         }
 
@@ -116,9 +125,21 @@ export default defineComponent({
       }
 
       animation()
+    }
+    onMounted(() => {
+      draw()
+      resizeCanvas()
+    })
+    onBeforeUnmount(() => {
+      removeResize()
     })
   }
 })
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.canvas-container {
+  height: 100%;
+  width: 100%;
+}
+</style>
