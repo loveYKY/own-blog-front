@@ -38,8 +38,11 @@ http.interceptors.request.use(async (config) => {
  */
 http.interceptors.response.use(
   (response) => {
-    // 未通过鉴权校验时，跳转至登录页
+    // 未通过鉴权校验时，跳转至登录页, 删除token和用户信息
     if(response.data.code == 401) {
+      Store.commit('SET_USER_INFO', {})
+      Store.commit('SET_ACCESS_TOKEN', null)
+      Cookies.remove('service_access_token')
       redirectToLogin()
     }
     return response;

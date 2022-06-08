@@ -13,7 +13,18 @@ const routes = [
   {
     path: '/main',
     name: 'main',
-    component: () => import('../views/blogEnd/main/index.vue')
+    component: () => import('../views/blogEnd/main/index.vue'),
+    children:[
+      {
+        path:'/main',
+        redirect:'/welcome'
+      },
+      {
+        path:'/welcome',
+        name:'welcome',
+        component: () => import('../views/blogEnd/main/components/welcome/index.vue'),
+      }
+    ]
   }
 ]
 
