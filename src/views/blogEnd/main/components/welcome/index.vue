@@ -1,12 +1,17 @@
 <template>
-    <div>1111</div>
+    <div>
+        <MyEditor></MyEditor>
+    </div>
 </template>
 
 <script>
 import { defineComponent, ref } from 'vue'
+import MyEditor from '@/components/myEditor/index.vue'
 
 export default defineComponent({
-  components: {},
+  components: {
+      MyEditor
+  },
   setup() {}
 })
 </script>

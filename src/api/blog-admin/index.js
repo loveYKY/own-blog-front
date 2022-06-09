@@ -1,6 +1,6 @@
-import { request } from '@/api/helper'
+import { request, formDatarequest } from '@/api/helper'
 
-//测试
+//登陆
 
 const login = query => {
   return request('post', '/Api/login', query)
@@ -11,6 +11,13 @@ const login = query => {
  */
  const getUserInfo = query => {
   return request('get', 'Api/admin/userInfo')
+}
+
+/**
+ * 获取图片链接
+ */
+ const getImgUrl = query => {
+  return formDatarequest('post', 'Api/article/getImgUrl', query)
 }
 
 
@@ -24,7 +31,8 @@ const getCateList = query => {
 const apiObj = {
   login,
   getUserInfo,
-  getCateList
+  getCateList,
+  getImgUrl
 }
 
 export default apiObj

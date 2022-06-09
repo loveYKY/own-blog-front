@@ -41,6 +41,7 @@ export default defineComponent({
     .right {
         flex: 1;
         background-color: #eff0f2;
+        padding: 16px;
     }
 }
 
