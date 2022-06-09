@@ -35,7 +35,6 @@
 
 <script>
 import { computed, defineComponent, onMounted, ref, toRefs } from 'vue'
-import Api from '@/api/index.js'
 import {
   setBold,
   setItalic,
@@ -46,7 +45,8 @@ import {
   redo,
   setLeft,
   setCenter,
-  setRight
+  setRight,
+  onContentChange
 } from '../utils/index.js'
 import {
   BoldOutlined,
@@ -88,57 +88,6 @@ export default defineComponent({
 
     const onInput = event => {
       context.emit('input', event.target.innerHTML)
-      onContentChange(event.target.innerHTML)
-    }
-
-
-
-    //data:base64图片格式字符串
-    //filename：文件名称
-    const base64toFile = (data, fileName) => {
-      const dataArr = data.split(',')
-      const byteString = atob(dataArr[1])
-      const options = {
-        type: 'image/jpeg',
-        endings: 'native'
-      }
-      const u8Arr = new Uint8Array(byteString.length)
-      for (let i = 0; i < byteString.length; i++) {
-        u8Arr[i] = byteString.charCodeAt(i)
-      }
-      return new File([u8Arr], fileName + '.jpg', options) //返回文件流
-    }
-
-    //筛选出html字符串中的base64
-    const onContentChange = async val => {
-      let content = val
-      let imgReg = /<img.*?(?:>|\/>)/gi // 匹配图片中的img标签
-      let srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i // 匹配图片中的src
-      let arr = content.match(imgReg) // 筛选出所有的img
-      let srcArr = []
-
-      if (arr != null) {
-        for (let i = 0; i < arr.length; i++) {
-          let src = arr[i].match(srcReg)
-          // 获取图片地址判断是否是base64格式
-          if (src[1].indexOf('base64') == -1) {
-            return
-          } else {
-            srcArr.push(src[1])
-          }
-        }
-      }
-
-      //将base64转化成文件流
-      let formData = new FormData()
-      let fileList = []
-      fileList = srcArr.map((item, index) => {
-        return base64toFile(item, index)
-      })
-      console.log(fileList)
-      formData.append('fileList', fileList[0])
-      // console.log(formData.get('fileList')[0])
-      const res = await Api.getImgUrl(formData)
     }
 
     onMounted(() => {
@@ -222,6 +171,10 @@ export default defineComponent({
   }
   p {
     margin-bottom: 0.75em;
+  }
+  img {
+    max-width: 100%;
+    max-height: 600px;
   }
 }
 </style>

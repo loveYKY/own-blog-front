@@ -51,5 +51,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .menuList {
   border-right: none !important;
+  width: 200px;
 }
 </style>

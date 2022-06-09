@@ -1,9 +1,9 @@
-import { http, formDataHttp } from './http'
-
+import { http } from './http'
+import { baseURL } from '@/configs'
 // http请求
 const request = (method = 'get', url = '', query = null, customConfig = {}) => {
   let config = {
-    baseURL: 'http://localhost:3001',
+    baseURL: baseURL,
     method,
     url,
     [method === 'get' ? 'params' : 'data']: query,
@@ -13,16 +13,5 @@ const request = (method = 'get', url = '', query = null, customConfig = {}) => {
   return http(config).then(res => res.data)
 }
 
-const formDatarequest = (method = 'get', url = '', query = null, customConfig = {}) => {
-  let config = {
-    baseURL: 'http://localhost:3001',
-    method,
-    url,
-    [method === 'get' ? 'params' : 'data']: query,
-    ...customConfig
-  }
 
-  return formDataHttp(config).then(res => res.data)
-}
-
-export { request, formDatarequest }
+export { request }
