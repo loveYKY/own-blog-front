@@ -12,7 +12,28 @@ const setBold = () => {
 const setItalic = () => {
   document.execCommand('italic')
 }
+/**
+ * 字体样式
+ */
+ const setFont = (val) => {
+  document.execCommand('FontName', false, val)
+}
 
+/**
+ * 字体大小
+ */
+
+const setFontWeight = (val) => {
+  document.execCommand('FontSize', false, val)
+}
+
+/**
+ * 字体颜色
+ */
+
+const setFontColor = (val)=> {
+  document.execCommand('ForeColor', false, val)
+}
 /**
  * 下划线
  */
@@ -72,29 +93,35 @@ const onContentChange = val => {
       let src = arr[i].match(srcReg)
       // 获取图片地址判断是否是base64格式
       if (src[1].indexOf('base64') == -1) {
-        return
+        continue
       } else {
         srcArr.push(src[1])
       }
     }
   }
 
-  //将base64转化成文件流
-  let formData = new FormData()
+  if (srcArr.length != 0) {
+    //将base64转化成文件流
+    let formData = new FormData()
 
-  srcArr.forEach((item, index) => {
-    formData.append('fileList', base64toFile(item, index))
-  })
-
-  return {
-    formData: formData,
-    base64Arr: srcArr,
-    imgArr: arr
+    srcArr.forEach((item, index) => {
+      formData.append('fileList', base64toFile(item, index))
+    })
+    return {
+      formData: formData,
+      base64Arr: srcArr,
+      imgArr: arr
+    }
+  } else {
+    return {}
   }
 }
 
 export {
   setBold,
+  setFont,
+  setFontWeight,
+  setFontColor,
   setItalic,
   setUnderline,
   setUl,

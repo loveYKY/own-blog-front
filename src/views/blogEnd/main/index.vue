@@ -14,10 +14,7 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import Api from '@/api/index.js'
-import Cookies from 'js-cookie'
-import { message } from 'ant-design-vue'
-import Store from '@/store'
+
 import Header from '@/components/header.vue'
 import Menu from './components/menu/index.vue'
 export default defineComponent({
@@ -43,14 +40,14 @@ export default defineComponent({
     flex: 1;
     background-color: #eff0f2;
     padding: 8px;
-    overflow-y: auto;
-    overflow-x: hidden;
   }
   .right-container {
     width: 100%;
     height: 100%;
     background-color: #ffffff;
     border-radius: 6px;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 }
 </style>

@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import '@/scss/global.scss'
-
+import 'default-passive-events'
 import Antd from 'ant-design-vue/es'
 import 'ant-design-vue/dist/antd.css'
 

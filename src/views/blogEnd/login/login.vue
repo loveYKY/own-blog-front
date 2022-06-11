@@ -8,12 +8,12 @@
           placeholder="请输入用户名"
           v-model:value="username"
         ></a-input>
-        <a-input
+        <a-input-password 
           class="user"
           style="margin-top: 40px"
           placeholder="请输入密码"
           v-model:value="password"
-        ></a-input>
+        ></a-input-password>
         <a-button class="btn" @click="login">登陆</a-button>
       </div>
 
@@ -139,7 +139,7 @@ export default defineComponent({
       .user {
         width: 100%;
         height: 40px;
-        border-radius: 15px;
+        border-radius: 15px !important;
         font-size: 16px;
         padding-left: 10px;
         &:focus {
