@@ -234,7 +234,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .article-container {
   padding: 16px;
-
+  ::v-deep .ant-table-title {
+    display: none !important;
+  }
   .action {
     display: flex;
     align-items: center;

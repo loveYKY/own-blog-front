@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="title">博客管理系统</div>
+    <div class="title">后台管理系统</div>
     <div class="user">
       <div class="name">{{ userInfo.name }}</div>
       <ExportOutlined class="export" @click="logout" />
